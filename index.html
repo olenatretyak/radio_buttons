@@ -1,0 +1,83 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+  <title>DOM 2</title>
+</head>
+
+<style type="text/css">
+  .lang {
+  display: none;
+  }
+
+  .lang.visible {
+    display: inline;
+  }
+</style>
+
+<body>
+
+  <div id="languages">
+  <label>
+    <input class="langButton" id="ua" type="radio" name="lang" value="1">UA
+  </label>
+  <label>
+    <input class="langButton" id="ru" type="radio" name="lang" value="2">RU
+  </label>
+  <label>
+    <input class="langButton" id="eng" type="radio" name="lang" value="3">ENG
+  </label>
+  </div>
+
+  <div id="welcome-message">
+    <span class="lang lang-ua">Привіт</span>
+    <span class="lang lang-ru">Привет</span>
+    <span class="lang lang-eng">Hello</span>
+    , username!
+
+    <span class="lang lang-ua">Раді тебе бачити!</span>
+    <span class="lang lang-ru">Рады тебя видеть!</span>
+    <span class="lang lang-eng">Nice to see you!</span>
+  </div>
+
+  <script type="text/javascript">
+
+    var applyLanguage = function (lang) {
+      var unvisibleEls = document.getElementsByClassName('lang')
+      for (var i=0; i<unvisibleEls.length; i++) {
+        var unvisibleEl = unvisibleEls[i];
+        unvisibleEl.classList.remove('visible');
+      };
+
+      var langEls = document.getElementsByClassName('lang-' + lang);
+
+      for (var i=0; i<langEls.length; i++) {
+        var langEl = langEls[i];
+        langEl.classList.add('visible');
+      };
+    }; 
+
+    
+    if(localStorage.getItem('language')) {
+      var IRadioRaz = localStorage.getItem('language');
+      document.querySelector('input[name="lang"][value="' + IRadioRaz + '"]').setAttribute('checked','checked');
+    }
+    
+
+    applyLanguage("ua");
+
+    // $<prefix> == DOMElement
+    var langButtons = document.querySelectorAll('html body .langButton')
+    for (var i=0; i<langButtons.length; i++) {
+      var langButton = langButtons[i];
+      langButton.addEventListener('click', function() {
+        applyLanguage (this.id)
+
+        localStorage.setItem('language', this.value);
+      });
+    };
+
+
+  </script>
+ 
+</body>
+</html>
