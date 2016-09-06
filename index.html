@@ -8,7 +8,6 @@
   .lang {
   display: none;
   }
-
   .lang.visible {
     display: inline;
   }
@@ -18,13 +17,13 @@
 
   <div id="languages">
   <label>
-    <input class="langButton" id="ua" type="radio" name="lang" value="1">UA
+    <input class="langButton" id="ua" type="radio" name="lang" value="ua">UA
   </label>
   <label>
-    <input class="langButton" id="ru" type="radio" name="lang" value="2">RU
+    <input class="langButton" id="ru" type="radio" name="lang" value="ru">RU
   </label>
   <label>
-    <input class="langButton" id="eng" type="radio" name="lang" value="3">ENG
+    <input class="langButton" id="eng" type="radio" name="lang" value="eng">ENG
   </label>
   </div>
 
@@ -47,23 +46,20 @@
         var unvisibleEl = unvisibleEls[i];
         unvisibleEl.classList.remove('visible');
       };
-
       var langEls = document.getElementsByClassName('lang-' + lang);
-
       for (var i=0; i<langEls.length; i++) {
         var langEl = langEls[i];
         langEl.classList.add('visible');
       };
     }; 
-
     
     if(localStorage.getItem('language')) {
-      var IRadioRaz = localStorage.getItem('language');
-      document.querySelector('input[name="lang"][value="' + IRadioRaz + '"]').setAttribute('checked','checked');
+      var checkedLang = localStorage.getItem('language');
+      document.querySelector('input[name="lang"][value="' + checkedLang + '"]').setAttribute('checked','checked');
+      applyLanguage(checkedLang);
+    } else {
+      applyLanguage("ua");
     }
-    
-
-    applyLanguage("ua");
 
     // $<prefix> == DOMElement
     var langButtons = document.querySelectorAll('html body .langButton')
@@ -71,11 +67,9 @@
       var langButton = langButtons[i];
       langButton.addEventListener('click', function() {
         applyLanguage (this.id)
-
-        localStorage.setItem('language', this.value);
+        localStorage.setItem('language', this.id);
       });
     };
-
 
   </script>
  
